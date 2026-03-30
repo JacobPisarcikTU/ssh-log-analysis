@@ -1,31 +1,57 @@
-# PROJECTNAME -- This is a placeholder template. 
+# SSH Log Analysis in Splunk
 
 ## Objective
-[Brief Objective - Remove this afterwards]
 
-The Detection Lab project aimed to establish a controlled environment for simulating and detecting cyber attacks. The primary focus was to ingest and analyze logs within a Security Information and Event Management (SIEM) system, generating test telemetry to mimic real-world attack scenarios. This hands-on experience was designed to deepen understanding of network security, attack patterns, and defensive strategies.
+Use Splunk to analyze SSH logs and review failed and successful SSH activity.
 
 ### Skills Learned
-[Bullet Points - Remove this afterwards]
 
-- Advanced understanding of SIEM concepts and practical application.
-- Proficiency in analyzing and interpreting network logs.
-- Ability to generate and recognize attack signatures and patterns.
-- Enhanced knowledge of network protocols and security vulnerabilities.
-- Development of critical thinking and problem-solving skills in cybersecurity.
+- SIEM log analysis
+- Basic Splunk searching
+- Reviewing failed and successful SSH logins
+- Identifying unusual SSH activity
 
 ### Tools Used
-[Bullet Points - Remove this afterwards]
 
-- Security Information and Event Management (SIEM) system for log ingestion and analysis.
-- Network analysis tools (such as Wireshark) for capturing and examining network traffic.
-- Telemetry generation tools to create realistic network traffic and attack scenarios.
+- Splunk
+- SSH logs
+- JSON log data
+- Zeek-style SSH logs
 
 ## Steps
-drag & drop screenshots here or use imgur and reference them using imgsrc
 
-Every screenshot should have some text explaining what the screenshot is about.
+### 1. Upload the SSH Logs into Splunk
 
-Example below.
+[Insert Screenshot 1 Here]
 
-*Ref 1: Network Diagram*
+Screenshot 1: Uploading the SSH log file into Splunk.
+
+### 2. Set the Source Type and Index
+
+[Insert Screenshot 2 Here]
+
+Screenshot 2: Configuring the source type and index for the SSH log data.
+
+### 3. Search the Logs
+
+[Insert Screenshot 3 Here]
+
+Screenshot 3: Searching the ingested SSH logs in Splunk.
+
+### 4. Review Failed Login Attempts
+
+[Insert Screenshot 4 Here]
+
+Screenshot 4: Reviewing failed SSH login attempts in Splunk.
+
+### 5. Count Total SSH Connections
+
+[Insert Screenshot 5 Here]
+
+Screenshot 5: Counting total SSH connections in the log data.
+
+### 6. Review Event Types
+
+[Insert Screenshot 6 Here]
+
+Screenshot 6: Reviewing SSH event types in Splunk.
