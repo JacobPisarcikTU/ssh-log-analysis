@@ -45,8 +45,25 @@ Screenshot 3: Searching the ingested SSH logs in Splunk to verify that the data 
 
 Screenshot 4: Running the query to identify the top endpoints with failed SSH login attempts.
 
-```spl
-index=ssh_lab sourcetype="json" auth_success=false
-| stats count by "id.orig_h"
-| sort -count
-| head 10
+    index=ssh_lab sourcetype="json" auth_success=false
+    | stats count by "id.orig_h"
+    | sort -count
+    | head 10
+
+### 5. Count Total SSH Connections
+
+[Insert Screenshot 5 Here]
+
+Screenshot 5: Running the query to count the total number of SSH connections in the dataset.
+
+    index=ssh_lab sourcetype="json"
+    | stats count as total_ssh_connections
+
+### 6. Review Event Types
+
+[Insert Screenshot 6 Here]
+
+Screenshot 6: Running the query to count the SSH event types observed in the logs.
+
+    index=ssh_lab sourcetype="json"
+    | stats count by event_type
