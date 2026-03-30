@@ -2,14 +2,15 @@
 
 ## Objective
 
-Use Splunk to analyze SSH logs and review failed and successful SSH activity.
+Use Splunk to ingest and analyze SSH logs, detect failed and successful SSH authentication attempts, and identify unusual SSH activity that may indicate brute force or unauthorized access.
 
 ### Skills Learned
 
-- SIEM log analysis
-- Basic Splunk searching
-- Reviewing failed and successful SSH logins
-- Identifying unusual SSH activity
+- SIEM log ingestion and log analysis
+- Basic Splunk searching and reporting
+- Reviewing failed and successful SSH authentication attempts
+- Identifying unusual SSH activity in log data
+- Working with JSON-formatted Zeek-style SSH logs
 
 ### Tools Used
 
@@ -24,7 +25,7 @@ Use Splunk to analyze SSH logs and review failed and successful SSH activity.
 
 [Insert Screenshot 1 Here]
 
-Screenshot 1: Uploading the SSH log file into Splunk.
+Screenshot 1: Uploading the SSH log file into Splunk through Settings > Add Data.
 
 ### 2. Set the Source Type and Index
 
@@ -36,22 +37,16 @@ Screenshot 2: Configuring the source type and index for the SSH log data.
 
 [Insert Screenshot 3 Here]
 
-Screenshot 3: Searching the ingested SSH logs in Splunk.
+Screenshot 3: Searching the ingested SSH logs in Splunk to verify that the data was indexed correctly.
 
 ### 4. Review Failed Login Attempts
 
 [Insert Screenshot 4 Here]
 
-Screenshot 4: Reviewing failed SSH login attempts in Splunk.
+Screenshot 4: Running the query to identify the top endpoints with failed SSH login attempts.
 
-### 5. Count Total SSH Connections
-
-[Insert Screenshot 5 Here]
-
-Screenshot 5: Counting total SSH connections in the log data.
-
-### 6. Review Event Types
-
-[Insert Screenshot 6 Here]
-
-Screenshot 6: Reviewing SSH event types in Splunk.
+```spl
+index=ssh_lab sourcetype="json" auth_success=false
+| stats count by "id.orig_h"
+| sort -count
+| head 10
