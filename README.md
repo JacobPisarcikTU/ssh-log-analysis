@@ -1,4 +1,4 @@
-# PROJECTNAME
+# PROJECTNAME -- This is a placeholder template. 
 
 ## Objective
 [Brief Objective - Remove this afterwards]
