@@ -23,47 +23,53 @@ Use Splunk to ingest and analyze SSH logs, detect failed and successful SSH auth
 
 ### 1. Upload the SSH Logs into Splunk
 
-[Insert Screenshot 1 Here]
+![Screenshot 1](screenshots/screenshot1.png)
 
-Screenshot 1: Uploading the SSH log file into Splunk through Settings > Add Data.
+After opening Splunk, I uploaded a .json file of SSH logs to Splunk. I did this by clicking settings, and then choosing 'add data'.  
 
 ### 2. Set the Source Type and Index
 
-[Insert Screenshot 2 Here]
+![Screenshot 2](screenshots/screenshot2.png)
 
-Screenshot 2: Configuring the source type and index for the SSH log data.
+After uploading ssh_logs.json, I followed the prompts and set the source type to '_json' and the index to 'main'. 
 
 ### 3. Search the Logs
 
-[Insert Screenshot 3 Here]
+![Screenshot 3](screenshots/screenshot3.png)
 
-Screenshot 3: Searching the ingested SSH logs in Splunk to verify that the data was indexed correctly.
+To verify that the data was indexed correctly, I performed a quick search in Splunk using the following query:
+
+    index=main sourcetype="_json"
 
 ### 4. Review Failed Login Attempts
 
-[Insert Screenshot 4 Here]
+![Screenshot 4](screenshots/screenshot4.png)
 
-Screenshot 4: Running the query to identify the top endpoints with failed SSH login attempts.
+The first task I wanted to complete was to list the top 10 endpoints with failed login attempts.
+To do this, I used the query below:
 
-    index=ssh_lab sourcetype="json" auth_success=false
+    index=main sourcetype="_json" auth_success=false
     | stats count by "id.orig_h"
     | sort -count
     | head 10
 
 ### 5. Count Total SSH Connections
 
-[Insert Screenshot 5 Here]
+![Screenshot 5](screenshots/screenshot5.png)
 
-Screenshot 5: Running the query to count the total number of SSH connections in the dataset.
+The following query would show me the total number of SSH connections in the dataset.  
 
-    index=ssh_lab sourcetype="json"
+    index=main sourcetype="json"
     | stats count as total_ssh_connections
 
 ### 6. Review Event Types
 
-[Insert Screenshot 6 Here]
+![Screenshot 6](screenshots/screenshot6.png)
 
-Screenshot 6: Running the query to count the SSH event types observed in the logs.
+I used the following query to count all event types seen in the logs. This includes successful, failed, no-auth, and multiple-failed attempts. 
 
-    index=ssh_lab sourcetype="json"
+    index=main sourcetype="json"
     | stats count by event_type
+
+### Conclusion
+(Add a conclusion and what hiccups I may have ran into during this project)
