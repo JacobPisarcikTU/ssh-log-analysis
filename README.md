@@ -47,6 +47,9 @@ This query searches the `main` index for events labeled with the `_json` sourcet
 What I found:  
 The search returned the uploaded SSH log events, which confirmed that the file was successfully added to Splunk and that the data was ready for analysis.
 
+Security implication:  
+Verifying successful ingestion is an important first step in log analysis because missing or improperly indexed data can lead to incomplete investigations and missed security events.
+
 ### 4. Review Failed Login Attempts
 
 ![Screenshot 4](screenshots/screenshot4.png)
@@ -59,10 +62,13 @@ The first analysis task was to identify the top 10 endpoints with failed SSH log
     | head 10
 
 What this query does:  
-This query filters the dataset to failed SSH authentication attempts, counts how many failed logins came from each source IP address, sorts the results from highest to lowest, and shows the top 10 endpoints.
+This query filters the dataset to failed SSH authentication attempts, counts how many failed logins came from each source IP address, sorts the results from highest to lowest, and displays the top 10 endpoints.
 
 What I found:  
-The results showed that several IP addresses generated repeated failed SSH login attempts. The highest count came from `10.0.0.25`, followed by `10.0.0.46` and `10.0.0.48`. This kind of pattern can help identify repeated unauthorized access attempts or possible brute force behavior.
+The results showed that several IP addresses generated repeated failed SSH login attempts. The highest count came from `10.0.0.25`, followed by `10.0.0.46` and `10.0.0.48`.
+
+Security implication:  
+Repeated failed SSH logins from the same source can be a sign of unauthorized access attempts or brute force activity. Highlighting the most frequent source IPs helps prioritize which endpoints may need further investigation.
 
 ### 5. Count Total SSH Connections
 
@@ -74,10 +80,13 @@ The next task was to determine the total number of SSH connections in the datase
     | stats count as total_ssh_connections
 
 What this query does:  
-This query counts all SSH log events in the dataset and returns the total as `total_ssh_connections`. It provides a quick baseline view of how much SSH activity is present in the uploaded log file.
+This query counts all SSH log events in the dataset and returns the total as `total_ssh_connections`. It provides a quick baseline view of the overall SSH activity present in the uploaded log file.
 
 What I found:  
-The results showed a total of `1200` SSH connections in the dataset. This gave me a better sense of the overall volume of SSH activity before looking more closely at specific event types.
+The results showed a total of `1200` SSH connections in the dataset. This gave me a better sense of the amount of SSH activity present before breaking the logs down further.
+
+Security implication:  
+Establishing a baseline for total SSH activity is useful because it provides context for later analysis. Without that baseline, it is harder to tell whether specific categories of events are rare, expected, or unusually common.
 
 ### 6. Review Event Types
 
@@ -89,17 +98,24 @@ For the final task, I counted all event types present in the logs using the foll
     | stats count by event_type
 
 What this query does:  
-This query groups the events by `event_type` and counts how many times each category appears. It helps break down the overall dataset into major SSH activity types.
+This query groups the events by `event_type` and counts how many times each category appears. It helps break down the overall dataset into the major types of SSH activity it contains.
 
 What I found:  
 The results showed four categories of SSH activity:
-- Successful SSH Login: `306`
+- Connection Without Authentication: `286`
 - Failed SSH Login: `305`
 - Multiple Failed Authentication Attempts: `303`
-- Connection Without Authentication: `286`
+- Successful SSH Login: `306`
+
+This breakdown gave a clearer picture of the authentication-related activity in the dataset and showed that the log file contained a fairly even distribution of different SSH event types.
+
+Security implication:  
+Reviewing event types helps analysts understand the kinds of behavior present in a dataset. A mix of successful logins, failed logins, and multiple failed attempts can be useful for spotting suspicious authentication patterns and identifying where deeper investigation may be needed.
 
 ## Conclusion
 
-This project helped me get more comfortable with using Splunk to upload, search, and analyze log data. By working through the SSH log file, I was able to verify the uploaded data, identify failed login activity, count total SSH connections, and review the different event types present in the dataset.
+This project helped me build practical experience with SIEM log ingestion, basic Splunk searching, and SSH log analysis. By uploading the dataset, verifying that it was indexed correctly, and running targeted queries, I was able to review failed and successful SSH authentication activity and better understand how Splunk can be used for security monitoring.
 
-One of the main hiccups during this project was troubleshooting the correct source type and query format after uploading the file. At first, getting the search results to appear took some trial and error, but once I confirmed the correct sourcetype and index values, the searches returned the expected results. Overall, this lab was a good introduction to using Splunk for log analysis and basic security-focused investigation.
+One of the main hiccups during this project was troubleshooting the correct source type and query format after uploading the file. At first, getting the search results to appear took some trial and error, but once I confirmed the correct sourcetype and index values, the searches returned the expected results. Working through that issue reinforced the importance of validating ingestion settings before beginning deeper analysis.
+
+Overall, this lab was a useful introduction to reviewing authentication-related events in Splunk. It also showed how even simple queries can provide meaningful security context by surfacing failed logins, establishing a baseline of SSH activity, and breaking the data into event categories that may point to suspicious behavior.
