@@ -41,13 +41,11 @@ To verify that the data was indexed correctly, I performed a basic search in Spl
 
     index=main sourcetype="_json"
 
-What this query does:  
 This query searches the `main` index for events labeled with the `_json` sourcetype. It is a simple way to confirm that the uploaded SSH log file was indexed properly and that the events are searchable.
 
 What I found:  
 The search returned the uploaded SSH log events, which confirmed that the file was successfully added to Splunk and that the data was ready for analysis.
 
-Security implication:  
 Verifying successful ingestion is an important first step in log analysis because missing or improperly indexed data can lead to incomplete investigations and missed security events.
 
 ### 4. Review Failed Login Attempts
@@ -61,7 +59,6 @@ The first analysis task was to identify the top 10 endpoints with failed SSH log
     | sort -count
     | head 10
 
-What this query does:  
 This query filters the dataset to failed SSH authentication attempts, counts how many failed logins came from each source IP address, sorts the results from highest to lowest, and displays the top 10 endpoints.
 
 What I found:  
@@ -79,7 +76,6 @@ The next task was to determine the total number of SSH connections in the datase
     index=main sourcetype="_json"
     | stats count as total_ssh_connections
 
-What this query does:  
 This query counts all SSH log events in the dataset and returns the total as `total_ssh_connections`. It provides a quick baseline view of the overall SSH activity present in the uploaded log file.
 
 What I found:  
@@ -97,7 +93,6 @@ For the final task, I counted all event types present in the logs using the foll
     index=main sourcetype="_json"
     | stats count by event_type
 
-What this query does:  
 This query groups the events by `event_type` and counts how many times each category appears. It helps break down the overall dataset into the major types of SSH activity it contains.
 
 What I found:  
